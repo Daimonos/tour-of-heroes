@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { MaterialModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
@@ -23,7 +24,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MaterialModule.forRoot()
   ],
   exports:[
     RouterModule

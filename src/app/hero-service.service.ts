@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Hero } from './hero';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
-export class HeroServiceService {
+export class HeroServiceService implements OnInit {
   private apiUrl:string = 'http://localhost:5984/heroes';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http:Http) { }
+
+  ngOnInit(){
+    console.log('Hero Service On Init');
+    this.checkDatabase();
+  }
 
   getHeroes():Promise<Hero[]> {
     return this.http.get(this.apiUrl+'/_all_docs?include_docs=true')
@@ -24,22 +29,40 @@ export class HeroServiceService {
 
   update(hero: Hero): Promise<Hero> {
     const url = `${this.apiUrl}/${hero._id}`;
-    return this.http
-      .put(url, JSON.stringify(hero), {headers: this.headers})
+    return this.http.put(url, JSON.stringify(hero), {headers: this.headers})
       .toPromise()
       .then((response) =>{console.log(response.json())})
       .catch(this.handleError);
   }
 
-  create(hero:string):Promise<Hero>{
+  create(hero:Hero):Promise<Hero>{
     console.log(hero);
-    let newHero = new Hero({name:hero});
-    return this.http.post(this.apiUrl, JSON.stringify(newHero), {headers:this.headers})
+    return this.http.post(this.apiUrl, JSON.stringify(hero), {headers:this.headers})
       .toPromise()
       .then(function(response){
         return "OK";
       })
       .catch(this.handleError);
+  }
+
+  private checkDatabase(){
+    console.log('Checking Database Connection');
+    this.http.get(this.apiUrl)
+    .toPromise()
+    .then(function(response){
+      console.log('Database Connection Successful');
+      console.log(response);
+    })
+    .catch((response)=>{
+      console.log('Database Not Found');
+      if(response.status === '404'){
+        this.http.put(this.apiUrl, null)
+        .toPromise()
+        .then((response)=>{
+          console.log(response);
+        })
+      }
+    });
   }
 
   private handleError(error: any): Promise<any> {

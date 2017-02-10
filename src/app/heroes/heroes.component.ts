@@ -12,6 +12,7 @@ export class HeroesComponent implements OnInit {
 
   heroes:Hero[];
   selectedHero:Hero;
+  newHero:Hero = new Hero();
 
   constructor(private heroService:HeroServiceService, private router:Router) { }
 
@@ -30,13 +31,24 @@ export class HeroesComponent implements OnInit {
     this.router.navigate(['/heroes', this.selectedHero._id]);
   }
 
-  add(name: string): void {
-  name = name.trim();
-  if (!name) { return; }
-  this.heroService.create(name)
-    .then(() => {
-      this.getHeroes();
-      this.selectedHero = null;
-    });
-}
+  add(hero: Hero): void {
+    if(!this.validateHero){
+      return;
+    } 
+    else{
+      this.heroService.create(hero)
+        .then(() => {
+          this.getHeroes();
+          this.selectedHero = null;
+          this.newHero = new Hero();
+      });
+  }
+  
+  }
+  private validateHero(hero:Hero):Boolean{
+    if(!hero.name || !hero.universe){
+      return false;
+    }
+    return true;
+  }
 }

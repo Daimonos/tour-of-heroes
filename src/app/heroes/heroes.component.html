@@ -13,9 +13,27 @@
   </h2>
   <button (click)="gotoDetail()">View Details</button>
 </div>
-<div>
-  <label>Hero name:</label> <input #heroName />
-  <button (click)="add(heroName.value); heroName.value=''">
-    Add
-  </button>
-</div>
+<md-card>
+  <md-card-title>
+    New Hero
+  </md-card-title>
+  <md-card-content>
+  <md-input-container>
+    <input md-input [(ngModel)]="newHero.name" placeholder = "Name" required/>
+  </md-input-container>
+  <br/>
+  <md-input-container>
+    <input md-input [(ngModel)] = "newHero.universe" placeholder = "Universe" required/>
+  </md-input-container>
+  <br/>
+  <md-input-container>
+    <input md-input [(ngModel)]="newHero.city" placeholder = "City"/>
+  </md-input-container>
+  <md-input-container>
+    <input md-input [(ngModel)]="newHero.powers" placeholder = "Powers"/>
+  </md-input-container>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button (click) = "add(newHero)">Add</button>
+  </md-card-actions>
+</md-card>

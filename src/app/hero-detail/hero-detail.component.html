@@ -1,15 +1,24 @@
-<div *ngIf="hero">
-     <h2>{{hero.name}} details!</h2>
-     <div>
-       <label>id: </label>{{hero._id}}
-     </div>
-     <div>
-       <label>name: </label>
-       <input [(ngModel)]="hero.name" placeholder="name"/>
-     </div>
-     <div>
-       <label>universe: </label>
-       <input [(ngModel)]="hero.universe" placeholder="Universe"/>
-     </div>
-     <button (click)="goBack()">Back</button>
-   </div>
+<md-card *ngIf="hero">
+  <md-card-title>
+    Edit {{hero.name}}
+  </md-card-title>
+  <md-card-content>
+  <md-input-container>
+    <input md-input [(ngModel)]="hero.name" placeholder = "Name" required/>
+  </md-input-container>
+  <br/>
+  <md-input-container>
+    <input md-input [(ngModel)] = "hero.universe" placeholder = "Universe" required/>
+  </md-input-container>
+  <br/>
+  <md-input-container>
+    <input md-input [(ngModel)]="hero.city" placeholder = "City"/>
+  </md-input-container>
+  <md-input-container>
+    <input md-input [(ngModel)]="hero.powers" placeholder = "Powers"/>
+  </md-input-container>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button (click) = "goBack()">Back</button>
+  </md-card-actions>
+</md-card>

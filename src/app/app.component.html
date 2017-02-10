@@ -1,6 +1,8 @@
-<h1>{{title}}</h1>
+<md-toolbar>
+  {{title}}
+</md-toolbar>
 <nav>
-  <a routerLink='/dashboard' routerLinkActive="active">Dashboard</a>
-  <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+  <button md-button routerLink='/dashboard' routerLinkActive="active">Dashboard</button>
+  <button md-button routerLink="/heroes" routerLinkActive="active">Heroes</button>
 </nav>
 <router-outlet></router-outlet>
